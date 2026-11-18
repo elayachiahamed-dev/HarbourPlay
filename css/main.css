@@ -1,5 +1,5 @@
 /* Harbour Jackpot – mobile first (390 design), desktop layout from 1280px (1440 design). */
-@font-face{font-family:Roboto;src:local("Roboto"),url(../assets/fonts/Roboto-Variable.woff2) format("woff2");font-weight:100 900;font-stretch:75% 100%;font-display:swap}
+@font-face{font-family:Roboto;src:url(../assets/fonts/Roboto-Variable.woff2) format("woff2");font-weight:100 900;font-stretch:75% 100%;font-display:swap}
 @font-face{font-family:"Ryosa Ocean";src:url(../assets/fonts/RyosaOcean-Black.woff2) format("woff2");font-weight:900;font-display:swap}
 
 :root{
@@ -29,7 +29,13 @@ button{font:inherit;color:inherit}
 
 /* buttons */
 .btn{display:inline-flex;align-items:center;justify-content:center;height:35px;padding:0 24px;border-radius:4px;font:900 12px/24px var(--sans);white-space:nowrap}
-.btn--primary{background:var(--yellow);color:var(--bg)}
+.btn--primary{background:var(--yellow);color:var(--bg);box-shadow:inset 0 0 0 1px transparent;transition:background-color .28s ease,color .28s ease,box-shadow .28s ease}
+/* Yellow CTA hover: white fill, dark text kept for contrast (#FFD600 on white is ~1.5:1), 1px #FFD600 inner
+   outline (inset shadow, so size never changes). Mouse/trackpad only, so taps on touch screens don't stick;
+   keyboard focus gets the same look. */
+@media (hover:hover) and (pointer:fine){.btn--primary:hover{background:#fff;box-shadow:inset 0 0 0 1px #ffd600}}
+.btn--primary:focus-visible{background:#fff;box-shadow:inset 0 0 0 1px #ffd600}
+@media (prefers-reduced-motion:reduce){.btn--primary{transition:none}}
 .btn--outline{border:1px solid #fff;color:#fff;width:162px;padding:0}
 
 /* section heading */
@@ -61,9 +67,18 @@ button{font:inherit;color:inherit}
 .hero__fade img{width:100%;height:100%}
 .hero__fade--top{top:0;height:153px;transform:rotate(180deg)}
 .hero__fade--bot{bottom:0;height:82px}
+/* the Figma fade PNGs end in a half-transparent row, which let the hero art show through as a thin blue line */
+.hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--bg);pointer-events:none}
+/* Below 1280 the copy sits over the bright glow above the captain's hat: the 14px legal line measured only
+   3.3–4.1:1 against the art (needs 4.5:1). A navy scrim behind the copy, fading out before the hat, lifts it to ≥5.4:1. */
+@media (max-width:1279.98px){
+  .hero__bg::after{content:"";position:absolute;inset:0;pointer-events:none;
+    background:linear-gradient(to bottom,rgba(0,6,38,.35) 0,rgba(0,6,38,.35) 215px,rgba(0,6,38,0) 255px)}
+}
 .hero__in{position:relative;z-index:1;width:350px;max-width:100%;margin:0 auto;padding:24px 24px 0}
 .hero__copy{display:flex;flex-direction:column;align-items:center;gap:24px}
-.hero h1{display:flex;flex-direction:column;gap:8px;text-align:center;width:276px}
+/* Mobile reference: amount glyphs end 15px above the tagline glyphs (was 31px) → pull the rest up 15px */
+.hero h1{display:flex;flex-direction:column;gap:8px;text-align:center;width:276px;margin-bottom:-15px}
 .hero__t{font:700 37px/33px var(--sans);letter-spacing:-.03em;height:33px}
 .hero__amt{font-size:49px;line-height:42px;height:42px;letter-spacing:-.03em;text-align:center}
 .hero__tag{font:700 14px/1.2 var(--sans);letter-spacing:-.03em;color:var(--soft);text-align:center}
@@ -87,9 +102,15 @@ button{font:inherit;color:inherit}
 
 /* how to play */
 .how__list{display:flex;flex-direction:column;gap:14px}
-.step{position:relative;height:168px;display:flex;align-items:center;border:1px solid var(--blue);border-radius:8px;overflow:hidden;background:linear-gradient(89.14deg,#000 1.5%,var(--blue) 99.657%)}
-.step--2{border-color:var(--yellow);background:linear-gradient(89.14deg,var(--navy) 1.5%,var(--blue) 99.657%)}
-.step--3{background:linear-gradient(89.14deg,var(--navy) 1.5%,var(--blue) 99.657%)}
+/* Card border: default = 1px #FFD600→#003FFF gradient (painted as a border-box background layer under a
+   transparent border so it follows the radius); hover = 2px solid #FFD600 (the 1px border turns yellow and the
+   ::after ring adds the inner 1px), so the card's size and contents never shift. */
+.step{--r:8px;--fill:linear-gradient(89.14deg,#000 1.5%,var(--blue) 99.657%);position:relative;height:168px;display:flex;align-items:center;border:1px solid transparent;border-radius:var(--r);overflow:hidden;background:var(--fill) padding-box,linear-gradient(90deg,#ffd600,#003fff) border-box;transition:border-color .25s ease}
+.step--2,.step--3{--fill:linear-gradient(89.14deg,var(--navy) 1.5%,var(--blue) 99.657%)}
+.step::after{content:"";position:absolute;inset:0;z-index:3;border:1px solid #ffd600;border-radius:calc(var(--r) - 1px);opacity:0;pointer-events:none;transition:opacity .25s ease}
+.step:hover,.step.is-tapped{border-color:#ffd600}
+.step:hover::after,.step.is-tapped::after{opacity:1}
+.step:hover .step__n,.step.is-tapped .step__n{color:#ffd600}
 .step__art{position:absolute;overflow:hidden;top:0}
 .step__img{position:absolute;max-width:none}
 .step--1 .step__art{right:5px;width:125px;height:167px;border-radius:8px}
@@ -98,25 +119,38 @@ button{font:inherit;color:inherit}
 .step--2 .step__img{height:135.32%;width:150.05%;left:-26.67%;top:7.6%}
 .step--3 .step__art{right:0;width:134px;height:167px;border-radius:7px}
 .step--3 .step__img{height:108.12%;width:100.85%;left:-1.49%;top:-8.12%}
-.step__ov{position:absolute;z-index:1;pointer-events:none;mix-blend-mode:hue}
+.step__ov{position:absolute;z-index:1;pointer-events:none;mix-blend-mode:hue;transition:opacity .25s ease}
+/* Figma "How to Play section Hover": on hover the blue hue tint is removed so the art shows in full colour —
+   Step 01 Rectangle 41, Step 02 Rectangle 40, Step 03 tint (Card 3 / Rectangle 10). Card backgrounds and borders stay. */
+.step:hover .step__ov,.step.is-tapped .step__ov{opacity:0}
+@media (prefers-reduced-motion:reduce){.step,.step::after,.step__ov,.step__n{transition:none}}
 .step__ov--css{background:var(--blue)}
 .step--1 .step__ov--css,.step--2 .step__ov--css{inset:1px;border-radius:7px}
 .step--2 .step__ov--svg,.step--3 .step__ov--css{display:none}
 .step--3 .step__ov--svg{left:1px;top:1px;width:348px;height:166px;max-width:none}
 .step__txt{position:relative;z-index:2;width:211px;padding-left:14px}
-.step__n{display:block;font:700 36px/41px var(--sans);color:var(--step)}
+.step__n{display:block;font:700 36px/41px var(--sans);color:var(--step);transition:color .25s ease}
 .step__txt h3{font:700 20px/normal var(--sans);margin-top:4px}
 .step__txt p{font-size:14px;margin-top:4px}
 
 /* prize tiers */
 .prz__head .prz__cta{display:none}
 .prz__grid{display:grid;grid-template-columns:1fr 1fr;gap:15px 16px}
-.prize{height:256px;border:1px solid var(--blue);border-radius:8px;background:var(--bg);padding:14px 0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px}
+/* Card border: same treatment as the How to Play steps. Default = 1px #FFD600→#003FFF gradient (border-box
+   background layer under a transparent border); hover/tap = 2px solid #FFD600 (border turns yellow + inner 1px
+   ::after ring), so there is no layout shift. */
+.prize{--r:8px;position:relative;height:256px;border:1px solid transparent;border-radius:var(--r);background:linear-gradient(var(--bg),var(--bg)) padding-box,linear-gradient(90deg,#ffd600,#003fff) border-box;padding:14px 0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;transition:border-color .25s ease}
+.prize::after{content:"";position:absolute;inset:0;border:1px solid #ffd600;border-radius:calc(var(--r) - 1px);opacity:0;pointer-events:none;transition:opacity .25s ease}
+.prize:hover,.prize.is-tapped{border-color:#ffd600}
+.prize:hover::after,.prize.is-tapped::after{opacity:1}
+/* Figma "Effect" layer (4th Prize: "Rectangle 51") = the blue hue tint; hidden (opacity 0) on hover/tap only */
+.prize:hover .prize__vis::after,.prize.is-tapped .prize__vis::after{opacity:0}
+@media (prefers-reduced-motion:reduce){.prize,.prize::after,.prize__vis::after{transition:none}}
 .prize__top{width:142px;height:76px;text-align:center}
 .prize__top h3{font:700 20px/23px var(--sans)}
 .prize__top p{font-size:14px;margin-top:6px}
 .prize__vis{position:relative;flex:none;width:120px;height:107.84px}
-.prize__vis::after{content:"";position:absolute;inset:0;background:var(--blue);mix-blend-mode:hue;border-radius:16px}
+.prize__vis::after{content:"";position:absolute;inset:0;background:var(--blue);mix-blend-mode:hue;border-radius:16px;transition:opacity .25s ease}
 .prize__crop{position:absolute;overflow:hidden;left:11.64px;top:6.55px;width:97.61px;height:93.86px}
 .prize__crop img{position:absolute;max-width:none;width:347.73%;height:361.64%;top:-22.48%;left:-17.32%}
 .t1 .prize__vis{height:110.7px}.t1 .prize__crop{left:10px;top:7.35px;width:99px;height:95px}.t1 .prize__crop img{left:-121.9%}
@@ -146,7 +180,16 @@ button{font:inherit;color:inherit}
 /* FAQ */
 .faq h2{text-align:center;max-width:336px;margin:0 auto 24px}
 .faq__list{display:flex;flex-direction:column;gap:12px}
-.fi{border:1px solid var(--gold);border-radius:8px}
+/* FAQ item border: default = 1px #FFD600→#003FFF gradient over the existing page background;
+   hover and open = 2px solid #FFD600 (border turns yellow + inner 1px ::after ring, so nothing shifts);
+   open also fills #000833 and stays styled while open. --fi-bg is registered so the fill can fade. */
+@property --fi-bg{syntax:"<color>";inherits:false;initial-value:#000626}
+.fi{--r:8px;--fi-bg:var(--bg);position:relative;border:1px solid transparent;border-radius:var(--r);background:linear-gradient(var(--fi-bg),var(--fi-bg)) padding-box,linear-gradient(90deg,#ffd600,#003fff) border-box;transition:border-color .25s ease,--fi-bg .25s ease}
+.fi::after{content:"";position:absolute;inset:0;border:1px solid #ffd600;border-radius:calc(var(--r) - 1px);opacity:0;pointer-events:none;transition:opacity .25s ease}
+.fi:hover,.fi[data-open=true]{border-color:#ffd600}
+.fi:hover::after,.fi[data-open=true]::after{opacity:1}
+.fi[data-open=true]{--fi-bg:#000833}
+@media (prefers-reduced-motion:reduce){.fi,.fi::after{transition:none}}
 .fi__q{display:flex;width:100%;align-items:center;justify-content:space-between;gap:21px;padding:13px 14px 13px 13px;background:none;border:0;text-align:left;cursor:pointer;font:600 18px/21px var(--sans)}
 .fi__ic{position:relative;flex:none;width:21px;height:21px;display:grid;place-items:center}
 .fi__plus{width:94.64%;height:94.64%}
@@ -158,6 +201,9 @@ button{font:inherit;color:inherit}
 
 /* footer */
 .ft{margin-top:55px}
+/* The footer dividers are empty 0-height boxes, so the following margins (60/24px desktop, 24/24px mobile)
+   collapsed through them and the gap ended up above the line. flow-root stops that collapse. */
+.ft .rule{display:flow-root}
 .ft__in{width:349px;max-width:calc(100% - 40px);margin:24px auto 0}
 .ft__groups{display:flex;flex-direction:column;gap:24px;margin-bottom:24px}
 .fg__btn,.follow h3,.pay h3{display:flex;width:100%;align-items:center;justify-content:space-between;background:none;border:0;padding:0;text-align:left;cursor:pointer;font:600 18px/21px var(--sans)}
@@ -180,12 +226,23 @@ button{font:inherit;color:inherit}
 .ft__opts{display:flex;gap:14px;align-items:center}
 .opt{display:flex;align-items:center;gap:8px;background:none;border:0;padding:2px 0;margin:-2px 0;min-height:24px;cursor:pointer;font:400 14px/16px var(--sans)}
 .opt img{width:20px;height:19.62px}
-.opt__eur,.opt__ring{position:relative;display:block;width:20px;height:20px;overflow:hidden}
-.opt__eur{border:1px solid #000}
-.opt__eur img{position:absolute;inset:3px 2px;width:auto;height:auto}
-.opt__ring{border:1px solid #fff;border-radius:30px}
-.opt__ring img{position:absolute;inset:16.41% 20.59%;width:auto;height:auto}
+/* Euro + accessibility use the original 30×30 SVGs as supplied (padding and the accessibility ring are part of
+   the files), so they are shown whole at the icon size with no CSS border/ring/cropping. */
+.opt__eur,.opt__ring{display:block;width:20px;height:20px}
+.opt .opt__eur img,.opt .opt__ring img{display:block;width:100%;height:100%}
 .opt--a11y{padding:2px;margin:-2px;min-width:24px;justify-content:center}
+
+/* ============ tablet / small laptop (420–1279) ============
+   The 750×1000 mobile hero art scales with the viewport width here. Centre-cropping it pushed the
+   captain's hat (≈44% down the image) up behind the CTA and legal line. Instead, keep the hat top
+   ≈245px into the hero (just below the legal copy, as on the 375 design): offset = 440·(W/750) − 245.
+   The hero grows so the captain shows down to his collar and outstretched hand (≈70% of the art) above the
+   82px bottom fade: height = 245 + (0.70 − 0.44)·1000·(W/750) + 82 = 327px + 34.667vw. It is capped at 700px
+   (reached at ≈1100px wide) so laptops still see the countdown below; at 1279 that still shows ≈66%. */
+@media (min-width:420px) and (max-width:1279.98px){
+  .hero{height:clamp(520px,327px + 34.667vw,700px)}
+  .hero__bg img{object-position:50% calc(245px - 58.667vw)}
+}
 
 /* ============ desktop (1440 design) ============ */
 @media (min-width:1280px){
@@ -205,14 +262,17 @@ button{font:inherit;color:inherit}
   .hdr__nav,.hdr[data-menu=true] .hdr__nav{display:flex;flex-direction:row;align-items:center;gap:24px;position:static;background:none;padding:0;border:0;width:677px;justify-content:flex-start}
   .hdr__nav ul{flex-direction:row;gap:24px}
   .hdr__nav ul a{padding:4px 0}
-  .hdr__cta{margin-left:auto}
+  /* Figma "CTA Header": 199×54 like the other desktop CTAs, which leaves the 25px EN→CTA gap of the 677px nav */
+  .hdr__cta{margin-left:auto;width:199px;padding:14px 40px}
 
-  .hero{height:450px;margin-top:3px;overflow:visible;background:var(--blue);border-bottom:1px solid var(--blue)}
+  .hero{height:450px;margin-top:3px;overflow:visible;background:var(--blue)}
   .hero__fade--top{top:-3px;height:20px}
   .hero__fade--bot{height:26px}
   .hero__in{width:var(--wrap);max-width:none;padding:65px 0 0 1px}
   .hero__copy{align-items:flex-start;width:520px;gap:32px}
-  .hero h1{align-items:flex-start;text-align:left;width:520px;gap:0}
+  /* Reference: amount glyphs end 26.6px above the tagline glyphs (was 57.6px), so pull everything below the
+     heading up 31px; title/amount sizes and spacing already matched */
+  .hero h1{align-items:flex-start;text-align:left;width:520px;gap:0;margin-bottom:-31px}
   .hero__t{font-size:68px;height:66px;line-height:66px;margin-bottom:-2px}
   .hero__amt{font-size:88px;height:106px;line-height:106px;text-align:left;margin-bottom:-2px}
   .hero__tag{font-size:25.5px;text-align:left;height:31px;line-height:31px}
@@ -234,7 +294,7 @@ button{font:inherit;color:inherit}
 
   .how .sh{max-width:668px}
   .how__list{flex-direction:row;gap:22px}
-  .step{flex:1;height:266px;border-radius:12px}
+  .step{--r:12px;flex:1;height:266px}
   .step__txt{padding-left:24px}
   .step__txt h3{font-size:24px}
   .step__txt p{font-size:18px}
@@ -255,7 +315,7 @@ button{font:inherit;color:inherit}
   .prz__head .sh{align-items:flex-start;text-align:left;margin:0;width:681px;max-width:none}
   .prz__head .prz__cta{display:inline-flex}
   .prz__grid{grid-template-columns:repeat(4,1fr);gap:24.5px}
-  .prize{height:446px;border-radius:12px;padding:24px 0}
+  .prize{--r:12px;height:446px;padding:24px 0}
   .prize__top{width:266px}
   .prize__top h3{font-size:24px;line-height:28px}
   .prize__top p{font-size:18px;font-weight:500;margin-top:6px}
@@ -276,8 +336,10 @@ button{font:inherit;color:inherit}
   .rc__balls{padding:0;margin:0;gap:35px}
   .ball{width:80px;height:80px}
   .ball span{font-size:40px}
-  .rc .rule--m{display:none}
-  .rc__bot{width:962px;max-width:100%;margin:48px auto 0;padding:0}
+  /* Figma "Line 1": full-width 1px #FFD600→#003FFF divider, 28px below the balls row and 20px above the CTA row
+     (28 + 20 = the original 48px gap, so nothing moves) */
+  .rc .rule--m{margin-top:28px}
+  .rc__bot{width:962px;max-width:100%;margin:20px auto 0;padding:0}
   .rc__win{font-size:22.5px}
   .nd{height:230px;border-radius:12px;padding:32px 24px;text-align:left;background:linear-gradient(244.99deg,var(--blue) 9.293%,var(--bg) 135.49%)}
   .nd h3{font-size:36px}
@@ -287,7 +349,7 @@ button{font:inherit;color:inherit}
   .faq{margin-top:104px;width:min(100% - 96px,1000px)}
   .faq h2{max-width:none;margin-bottom:32px}
   .faq__list{gap:14px}
-  .fi{border-radius:12px}
+  .fi{--r:12px}
   .fi__q{padding:23px 25px 23px 24px;font:700 24px/28px var(--sans);gap:24px}
   .fi__ic{width:30px;height:30px}
   .fi__minus--m{display:none}
@@ -321,3 +383,62 @@ button{font:inherit;color:inherit}
 /* keep single-line headings from wrapping when Roboto is not installed (fallback fonts are wider) */
 .hero__t,.hero__amt,.cd h2,.rc__date,.nd h3{white-space:nowrap}
 @media (min-width:1280px){.cd__info{flex:none}.rc__date{font-size:clamp(28px,2.5vw,36px)}}
+
+/* ==================== responsive refinements ====================
+   Fixes from the 320–1920px audit. The 390px (mobile) and 1440px+ (desktop) designs are unchanged;
+   these rules only take effect where the fixed design sizes no longer fit. */
+
+/* All mobile widths: step 3 art keeps its proportions (it was stretched ~5%), and the step 3 tint is
+   anchored to the right edge so it stays over the chest when the card is narrower or wider than 350px
+   (identical at 350px: the 348px tint sits at left 1px inside the 348px padding box, i.e. right -1px). */
+.step--3 .step__img{object-fit:cover}
+.step--3 .step__ov--svg{left:auto;right:-1px}
+
+/* Small phones (<390px): the 211px step text no longer fits beside the art, so the text column narrows
+   (it is 211px again at 390px) and the card may grow taller instead of running text over the picture.
+   Result balls stay round and shrink to fit instead of being squeezed. */
+@media (max-width:389.98px){
+  .step{height:auto;min-height:168px;padding:10px 0}
+  .step__txt{width:clamp(150px,100% - 139px,211px)}
+  .step__art,.step--3 .step__ov--svg{top:0;bottom:0;margin:auto 0}
+  .ball{flex:none;width:min(52.59px,17.5%);height:auto;aspect-ratio:1}
+}
+
+/* Tablets (600–1279px): use the width instead of a 350px phone column. Containers grow to 704px max;
+   cards keep their mobile design. From 768px the four prize cards sit in one row, as on desktop. */
+@media (min-width:600px) and (max-width:1279.98px){
+  :root{--wrap:min(100% - 64px,704px)}
+  .ft__in{width:var(--wrap);max-width:none}
+  .nd__cta{width:min(100%,255px)}
+}
+@media (min-width:768px) and (max-width:1279.98px){
+  .prz__grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+}
+
+/* Small laptops (1280–1439px): the desktop row layouts were sized for a 1344px container and overflowed
+   (page scrolled sideways) or ran step text over the art. Everything below scales down to fit and
+   reaches the exact desktop values at 1440px. */
+@media (min-width:1280px) and (max-width:1439.98px){
+  /* How to Play: text column narrows (211→170px); art boxes narrow from the left and crop the image
+     instead of scaling it, so artwork keeps its size and proportions. */
+  .step__txt{width:clamp(170px,100% - 222px,211px)}
+  .step--1 .step__art{width:min(217px,100% - 12px - clamp(170px,100% - 222px,211px))}
+  .step--2 .step__art{width:min(239px,100% - 12px - clamp(170px,100% - 222px,211px))}
+  .step--3 .step__art{width:min(202px,100% - 12px - clamp(170px,100% - 222px,211px))}
+  .step--1 .step__img{width:294.5px;height:294.5px;left:auto;right:-77px;top:-10px}
+  .step--2 .step__img{width:347.4px;height:347.4px;left:auto;right:-57.6px;top:-.8px}
+  .step--2 .step__ov--svg{left:auto;right:1px;width:calc(min(239px,100% - 12px - clamp(170px,100% - 222px,211px)) - 31px)}
+  .step--3 .step__ov--css{left:auto;right:2px;width:calc(min(202px,100% - 12px - clamp(170px,100% - 222px,211px)) + 66px)}
+
+  /* Latest results: the card may shrink; date block, balls and spacing flex instead of fixed 962px. */
+  .res__row{grid-template-columns:minmax(0,1fr) 316px}
+  .rc__top{width:auto;margin:0 24px;justify-content:space-between;gap:24px}
+  .rc__id{flex:none;width:auto;max-width:344px}
+  .rc__balls{flex:0 1 540px;min-width:0;justify-content:space-between;gap:12px}
+  .ball{flex:none;width:clamp(64px,100vw / 18,80px);height:auto;aspect-ratio:1}
+  .ball span{font-size:clamp(32px,100vw / 36,40px)}
+  .rc__bot{width:auto;margin:20px 24px 0}
+
+  /* Footer: four columns share the width instead of 4×268px + 3×90px gaps (1342px). */
+  .ft__groups{grid-template-columns:repeat(4,minmax(0,268px));column-gap:24px;justify-content:space-between}
+}
