@@ -113,14 +113,6 @@
     ]
   },
 
-  "saferGambling": {
-    "title": "Safer Gambling",
-    "text": "18+ only. Play responsibly: only spend what you can afford to lose, and take a break if playing stops being fun.",
-    "support": "PLACEHOLDER: name and contact details of the support / helpline organisation, to be confirmed by the operator.",
-    "placeholder": true,
-    "_note": "'text' is general guidance based on the design's '18+ Play Responsibly' line. 'support' must be replaced with the operator's official helpline information."
-  },
-
   "footer": {
     "groups": [
       { "id": "contact", "title": "Contacts US", "items": [
@@ -141,7 +133,7 @@
         { "label": "Contact Us", "href": "#contact" }
       ] },
       { "id": "rg", "title": "Responsible Play", "items": [
-        { "label": "Safer Gambling", "href": "#safer-gambling" },
+        { "label": "Safer Gambling", "href": "#", "placeholder": true },
         { "label": "Set Your Limits", "href": "#", "placeholder": true },
         { "label": "Get Support", "href": "#", "placeholder": true }
       ] }
@@ -155,10 +147,6 @@
     "paymentsTitle": "Secure & Easy Payments",
     "payments": ["Paysafe Payz", "Visa", "Mastercard", "Maestro", "Skrill", "Rapid Transfer by Skrill", "Neteller", "Revolut", "Bank transfer", "PCI DSS compliant"],
     "copyright": { "prefix": "© 2026 ", "name": "Harbour Play", "suffix": ". All rights reserved." },
-    "licence": {
-      "text": "PLACEHOLDER: licence holder, regulator and licence number to be provided by the operator.",
-      "placeholder": true
-    },
     "language": "English",
     "currency": "EUR",
     "accessibilityLabel": "Accessibility options"

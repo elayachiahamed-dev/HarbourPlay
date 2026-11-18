@@ -1,6 +1,6 @@
 # Harbour Jackpot – landing page
 
-A responsive, single-page landing site for the **Harbour Jackpot** weekly draw by Harbour Play: hero, live countdown to the next draw, How to Play, prize tiers, latest results, FAQ, Safer Gambling information and footer.
+A responsive, single-page landing site for the **Harbour Jackpot** weekly draw by Harbour Play: hero, live countdown to the next draw, How to Play, prize tiers, latest results, FAQ and footer.
 
 All editable text and numbers live in one file, **`data.json`**. The page reads it on load, so content changes need no HTML or JavaScript edits.
 
@@ -99,8 +99,7 @@ Open `data.json` in any text editor, change values, save, and refresh the page. 
 | `prizes` | Section text and the four prize tiers (name, amount, image alt) |
 | `latestResults` | Draw date, draw number, winning `numbers`, winner count, "View all" link |
 | `faq` | Questions and answers; `"open": true` shows an item expanded on load |
-| `saferGambling` | Safer Gambling heading, guidance text and support/helpline line (shown in the footer, `#safer-gambling`) |
-| `footer` | Link groups, social links, payment logo names (alt text), copyright, `licence` text, language/currency labels |
+| `footer` | Link groups, social links, payment logo names (alt text), copyright, language/currency labels |
 
 ### Tokens: change a value once, update it everywhere
 
@@ -201,7 +200,7 @@ These are placeholders in `data.json` (run `python3 scripts/check.py` for the cu
 - **Buy Ticket** link (`cta.href`): no purchase page exists yet.
 - **Latest results**: date, draw number, numbers and winner count are sample values from the design, not real results.
 - **FAQ answers**: none were provided; all six show placeholder text.
-- **Safer Gambling support / helpline** and the **licence** line (licence holder, regulator, number).
-- Footer links with no destination yet: Terms & Conditions, Privacy Policy, Set Your Limits, Get Support, View All Results, and the Facebook, Instagram and YouTube links.
+- **Safer gambling, helpline and licence information** is not on the site. The page has no section for it, so adding it later needs a small code change, not just a `data.json` edit. The footer's "Safer Gambling" link is a placeholder until then.
+- Footer links with no destination yet: Terms & Conditions, Privacy Policy, Safer Gambling, Set Your Limits, Get Support, View All Results, and the Facebook, Instagram and YouTube links.
 - Confirm the contact email, phone number and prize amounts shown in the design are real.
 - The section subtitles for Prize tiers and Latest results repeat an unfinished sentence from the design.

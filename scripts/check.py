@@ -26,7 +26,7 @@ except Exception as exc:  # noqa: BLE001 - report any parse/IO problem
     print(f"ERROR data.json: {exc}")
     sys.exit(1)
 required = ["site", "jackpot", "draw", "cta", "navigation", "hero", "countdown", "howToPlay",
-            "prizes", "latestResults", "faq", "saferGambling", "footer"]
+            "prizes", "latestResults", "faq", "footer"]
 for key in required:
     if key not in data:
         errors.append(f"data.json is missing the '{key}' block")

@@ -218,12 +218,6 @@ button{font:inherit;color:inherit}
 .ft__brand img{width:169px;height:22px;object-fit:cover}
 .ft__brand p{font-size:12px;line-height:18px;text-align:center}
 .ft__opts{display:flex;gap:14px;align-items:center}
-/* Safer Gambling block + licence line (content from data.json), set in the footer's existing type styles */
-.ft__rg{margin-top:24px;scroll-margin-top:16px}
-.ft__rg h3{font:600 18px/21px var(--sans)}
-.ft__rg p{margin-top:8px;font-size:14px;line-height:20px;color:var(--soft)}
-.ft__copy:has(+ .ft__lic){padding-bottom:14px}
-.ft__lic{padding-bottom:33px;font-size:12px;line-height:18px;text-align:center;color:var(--muted)}
 .opt{display:flex;align-items:center;gap:8px;background:none;border:0;padding:2px 0;margin:-2px 0;min-height:24px;cursor:pointer;font:400 14px/16px var(--sans)}
 .opt img{width:20px;height:19.62px}
 /* Euro + accessibility use the original 30×30 SVGs as supplied (padding and the accessibility ring are part of
@@ -374,11 +368,6 @@ button{font:inherit;color:inherit}
   .ft__brand img{width:256px;height:34px}
   .ft__brand p{font-size:18px;line-height:18px;text-align:left;width:373px}
   .ft__opts{gap:18px}
-  .ft__rg{margin-top:32px;max-width:950px}
-  .ft__rg h3{font-size:22px;line-height:normal}
-  .ft__rg p{font-size:16px;line-height:22px}
-  .ft__copy:has(+ .ft__lic){padding-bottom:0}
-  .ft__lic{margin-top:14px;padding-bottom:0;font-size:14px;line-height:20px;text-align:left}
   .opt img{width:30px;height:29.43px}
   .opt__eur,.opt__ring{width:30px;height:30px}
 }

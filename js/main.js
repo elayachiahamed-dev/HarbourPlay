@@ -123,9 +123,6 @@ const footer = (c) => {
       <div class="follow"><h3>${esc(f.followTitle)}</h3><ul>${f.social.map((s, i) => `<li><a href="${esc(s.href)}" aria-label="${esc(s.label)}">${ico('social-' + (i + 1) + '.svg')}</a></li>`).join('')}</ul></div>
       <div class="pay"><h3>${esc(f.paymentsTitle)}</h3><ul>${f.payments.map((p, i) => `<li><img src="${A('img/pay-' + String(i + 1).padStart(2, '0') + '.png')}" alt="${esc(p)}" width="61" height="37"></li>`).join('')}</ul></div>
     </div>
-    <section class="ft__rg" id="safer-gambling" aria-labelledby="rg-h">
-      <h3 id="rg-h">${esc(c.saferGambling.title)}</h3><p>${esc(c.saferGambling.text)}</p>${c.saferGambling.support ? `<p>${esc(c.saferGambling.support)}</p>` : ''}
-    </section>
     <div class="ft__bot">
       <div class="rule" aria-hidden="true"><picture><source media="(min-width:1280px)" srcset="${A('icons/rule-footer-bottom.svg')}"><img src="${A('icons/rule-footer-bottom-m.svg')}" alt=""></picture></div>
       <div class="ft__copy">
@@ -136,7 +133,6 @@ const footer = (c) => {
           <button class="opt opt--a11y" type="button" aria-label="${esc(f.accessibilityLabel)}"><span class="opt__ring">${ico('accessibility-original.svg')}</span></button>
         </div>
       </div>
-      ${f.licence?.text ? `<p class="ft__lic">${esc(f.licence.text)}</p>` : ''}
     </div>
   </div>
 </footer>`;
