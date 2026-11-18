@@ -69,6 +69,12 @@ button{font:inherit;color:inherit}
 .hero__fade--bot{bottom:0;height:82px}
 /* the Figma fade PNGs end in a half-transparent row, which let the hero art show through as a thin blue line */
 .hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--bg);pointer-events:none}
+/* Below 1280 the copy sits over the bright glow above the captain's hat: the 14px legal line measured only
+   3.3–4.1:1 against the art (needs 4.5:1). A navy scrim behind the copy, fading out before the hat, lifts it to ≥5.4:1. */
+@media (max-width:1279.98px){
+  .hero__bg::after{content:"";position:absolute;inset:0;pointer-events:none;
+    background:linear-gradient(to bottom,rgba(0,6,38,.35) 0,rgba(0,6,38,.35) 215px,rgba(0,6,38,0) 255px)}
+}
 .hero__in{position:relative;z-index:1;width:350px;max-width:100%;margin:0 auto;padding:24px 24px 0}
 .hero__copy{display:flex;flex-direction:column;align-items:center;gap:24px}
 /* Mobile reference: amount glyphs end 15px above the tagline glyphs (was 31px) → pull the rest up 15px */
@@ -230,9 +236,11 @@ button{font:inherit;color:inherit}
    The 750×1000 mobile hero art scales with the viewport width here. Centre-cropping it pushed the
    captain's hat (≈44% down the image) up behind the CTA and legal line. Instead, keep the hat top
    ≈245px into the hero (just below the legal copy, as on the 375 design): offset = 440·(W/750) − 245.
-   The hero also grows so his face, down to the moustache (≈64%), stays visible. */
+   The hero grows so the captain shows down to his collar and outstretched hand (≈70% of the art) above the
+   82px bottom fade: height = 245 + (0.70 − 0.44)·1000·(W/750) + 82 = 327px + 34.667vw. It is capped at 700px
+   (reached at ≈1100px wide) so laptops still see the countdown below; at 1279 that still shows ≈66%. */
 @media (min-width:420px) and (max-width:1279.98px){
-  .hero{height:max(520px,calc(245px + 26.667vw))}
+  .hero{height:clamp(520px,327px + 34.667vw,700px)}
   .hero__bg img{object-position:50% calc(245px - 58.667vw)}
 }
 
@@ -375,3 +383,62 @@ button{font:inherit;color:inherit}
 /* keep single-line headings from wrapping when Roboto is not installed (fallback fonts are wider) */
 .hero__t,.hero__amt,.cd h2,.rc__date,.nd h3{white-space:nowrap}
 @media (min-width:1280px){.cd__info{flex:none}.rc__date{font-size:clamp(28px,2.5vw,36px)}}
+
+/* ==================== responsive refinements ====================
+   Fixes from the 320–1920px audit. The 390px (mobile) and 1440px+ (desktop) designs are unchanged;
+   these rules only take effect where the fixed design sizes no longer fit. */
+
+/* All mobile widths: step 3 art keeps its proportions (it was stretched ~5%), and the step 3 tint is
+   anchored to the right edge so it stays over the chest when the card is narrower or wider than 350px
+   (identical at 350px: the 348px tint sits at left 1px inside the 348px padding box, i.e. right -1px). */
+.step--3 .step__img{object-fit:cover}
+.step--3 .step__ov--svg{left:auto;right:-1px}
+
+/* Small phones (<390px): the 211px step text no longer fits beside the art, so the text column narrows
+   (it is 211px again at 390px) and the card may grow taller instead of running text over the picture.
+   Result balls stay round and shrink to fit instead of being squeezed. */
+@media (max-width:389.98px){
+  .step{height:auto;min-height:168px;padding:10px 0}
+  .step__txt{width:clamp(150px,100% - 139px,211px)}
+  .step__art,.step--3 .step__ov--svg{top:0;bottom:0;margin:auto 0}
+  .ball{flex:none;width:min(52.59px,17.5%);height:auto;aspect-ratio:1}
+}
+
+/* Tablets (600–1279px): use the width instead of a 350px phone column. Containers grow to 704px max;
+   cards keep their mobile design. From 768px the four prize cards sit in one row, as on desktop. */
+@media (min-width:600px) and (max-width:1279.98px){
+  :root{--wrap:min(100% - 64px,704px)}
+  .ft__in{width:var(--wrap);max-width:none}
+  .nd__cta{width:min(100%,255px)}
+}
+@media (min-width:768px) and (max-width:1279.98px){
+  .prz__grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+}
+
+/* Small laptops (1280–1439px): the desktop row layouts were sized for a 1344px container and overflowed
+   (page scrolled sideways) or ran step text over the art. Everything below scales down to fit and
+   reaches the exact desktop values at 1440px. */
+@media (min-width:1280px) and (max-width:1439.98px){
+  /* How to Play: text column narrows (211→170px); art boxes narrow from the left and crop the image
+     instead of scaling it, so artwork keeps its size and proportions. */
+  .step__txt{width:clamp(170px,100% - 222px,211px)}
+  .step--1 .step__art{width:min(217px,100% - 12px - clamp(170px,100% - 222px,211px))}
+  .step--2 .step__art{width:min(239px,100% - 12px - clamp(170px,100% - 222px,211px))}
+  .step--3 .step__art{width:min(202px,100% - 12px - clamp(170px,100% - 222px,211px))}
+  .step--1 .step__img{width:294.5px;height:294.5px;left:auto;right:-77px;top:-10px}
+  .step--2 .step__img{width:347.4px;height:347.4px;left:auto;right:-57.6px;top:-.8px}
+  .step--2 .step__ov--svg{left:auto;right:1px;width:calc(min(239px,100% - 12px - clamp(170px,100% - 222px,211px)) - 31px)}
+  .step--3 .step__ov--css{left:auto;right:2px;width:calc(min(202px,100% - 12px - clamp(170px,100% - 222px,211px)) + 66px)}
+
+  /* Latest results: the card may shrink; date block, balls and spacing flex instead of fixed 962px. */
+  .res__row{grid-template-columns:minmax(0,1fr) 316px}
+  .rc__top{width:auto;margin:0 24px;justify-content:space-between;gap:24px}
+  .rc__id{flex:none;width:auto;max-width:344px}
+  .rc__balls{flex:0 1 540px;min-width:0;justify-content:space-between;gap:12px}
+  .ball{flex:none;width:clamp(64px,100vw / 18,80px);height:auto;aspect-ratio:1}
+  .ball span{font-size:clamp(32px,100vw / 36,40px)}
+  .rc__bot{width:auto;margin:20px 24px 0}
+
+  /* Footer: four columns share the width instead of 4×268px + 3×90px gaps (1342px). */
+  .ft__groups{grid-template-columns:repeat(4,minmax(0,268px));column-gap:24px;justify-content:space-between}
+}

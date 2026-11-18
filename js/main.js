@@ -24,7 +24,12 @@ const header = (c) => `
 
 const hero = (c) => `
 <section class="hero" id="home" aria-labelledby="hero-title">
-  <div class="hero__bg">${pic('img/hero-desktop.png', 'img/hero-mobile.png', c.hero.imageAlt)}</div>
+  <div class="hero__bg"><picture>
+    <source media="(min-width:1280px)" type="image/webp" srcset="${A('img/hero-desktop.webp')}" width="1920" height="600">
+    <source media="(min-width:1280px)" srcset="${A('img/hero-desktop.png')}" width="1920" height="600">
+    <source type="image/webp" srcset="${A('img/hero-mobile.webp')}">
+    <img src="${A('img/hero-mobile.png')}" alt="${esc(c.hero.imageAlt)}" width="750" height="1000" fetchpriority="high" decoding="async">
+  </picture></div>
   <picture class="hero__fade hero__fade--top"><source media="(min-width:1280px)" srcset="${A('img/hero-fade-top.png')}"><img src="${A('img/hero-m-fade-top.png')}" alt=""></picture>
   <picture class="hero__fade hero__fade--bot"><source media="(min-width:1280px)" srcset="${A('img/hero-fade-bottom.png')}"><img src="${A('img/hero-m-fade-bottom.png')}" alt=""></picture>
   <div class="hero__in">
@@ -59,7 +64,7 @@ const howTo = (c) => `
   ${heading('how-h', c.howToPlay.title, c.howToPlay.subtitle, 'sh--c')}
   <ol class="how__list">${c.howToPlay.steps.map((s, i) => `
     <li class="step step--${i + 1}">
-      <div class="step__art"><img class="step__img" src="${A('img/step-' + (i + 1) + '.png')}" alt="${esc(s.imageAlt)}"></div>
+      <div class="step__art"><img class="step__img" src="${A('img/step-' + (i + 1) + '.png')}" alt="${esc(s.imageAlt)}" loading="lazy" decoding="async"></div>
       <span class="step__ov step__ov--css" aria-hidden="true"></span>${i === 1 ? ico('step-2-overlay.svg', 'step__ov step__ov--svg') : i === 2 ? ico('step-3-overlay-m.svg', 'step__ov step__ov--svg') : ''}
       <div class="step__txt"><span class="step__n">${esc(s.number)}</span><h3>${esc(s.title)}</h3><p>${esc(s.text)}</p></div>
     </li>`).join('')}</ol>
@@ -71,7 +76,7 @@ const prizes = (c) => `
   <ul class="prz__grid">${c.prizes.tiers.map((t, i) => `
     <li class="prize t${i}">
       <div class="prize__top"><h3>${esc(t.name)}</h3><p>${esc(c.prizes.blurb)}</p></div>
-      <div class="prize__vis">${i < 3 ? `<span class="prize__crop"><img src="${A('img/prize-sprite.png')}" alt="${esc(t.imageAlt)}"></span>` : `<img class="prize__art" src="${A('icons/prize-4th.svg')}" alt="${esc(t.imageAlt)}">`}</div>
+      <div class="prize__vis">${i < 3 ? `<span class="prize__crop"><img src="${A('img/prize-sprite.png')}" alt="${esc(t.imageAlt)}" loading="lazy" decoding="async"></span>` : `<img class="prize__art" src="${A('icons/prize-4th.svg')}" alt="${esc(t.imageAlt)}" loading="lazy" decoding="async">`}</div>
       <p class="prize__amt gold-down">${esc(t.amount)}</p>
     </li>`).join('')}</ul>
 </section>`;
@@ -121,7 +126,7 @@ const footer = (c) => {
     <div class="ft__groups">${f.groups.map(group).join('')}</div>
     <div class="ft__row">
       <div class="follow"><h3>${esc(f.followTitle)}</h3><ul>${f.social.map((s, i) => `<li><a href="${esc(s.href)}" aria-label="${esc(s.label)}">${ico('social-' + (i + 1) + '.svg')}</a></li>`).join('')}</ul></div>
-      <div class="pay"><h3>${esc(f.paymentsTitle)}</h3><ul>${f.payments.map((p, i) => `<li><img src="${A('img/pay-' + String(i + 1).padStart(2, '0') + '.png')}" alt="${esc(p)}" width="61" height="37"></li>`).join('')}</ul></div>
+      <div class="pay"><h3>${esc(f.paymentsTitle)}</h3><ul>${f.payments.map((p, i) => `<li><img src="${A('img/pay-' + String(i + 1).padStart(2, '0') + '.png')}" alt="${esc(p)}" width="61" height="37" loading="lazy" decoding="async"></li>`).join('')}</ul></div>
     </div>
     <div class="ft__bot">
       <div class="rule" aria-hidden="true"><picture><source media="(min-width:1280px)" srcset="${A('icons/rule-footer-bottom.svg')}"><img src="${A('icons/rule-footer-bottom-m.svg')}" alt=""></picture></div>
