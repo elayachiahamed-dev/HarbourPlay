@@ -1,0 +1,13 @@
+{
+  "name": "harbour-jackpot",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Harbour Jackpot landing page – static HTML/CSS/JS, content in data.json",
+  "scripts": {
+    "start": "node scripts/serve.mjs",
+    "start:ruby": "ruby scripts/serve.rb",
+    "check": "python3 scripts/check.py",
+    "assets": "node scripts/fetch-assets.mjs"
+  }
+}

@@ -1,0 +1,23 @@
+# Netlify configuration – static site, no build step.
+# The repository root is published as-is: index.html, data.json, css/, js/, assets/.
+
+[build]
+  publish = "."
+
+# Content edits in data.json should show up on the next page load.
+[[headers]]
+  for = "/data.json"
+  [headers.values]
+    Cache-Control = "no-cache"
+
+# Images, fonts and icons rarely change; cache them for a week (file names are not fingerprinted).
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"

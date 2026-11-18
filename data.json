@@ -1,0 +1,166 @@
+{
+  "_about": "Editable content for the Harbour Jackpot landing page. Edit values here only; the page re-renders from this file on load. Text may use the tokens {jackpot}, {ticketPrice}, {drawDay}, {drawDayUpper} and {drawTime}, which are filled from the 'jackpot' and 'draw' blocks. Entries marked \"placeholder\": true are not verified and must be replaced before going live. See README.md.",
+
+  "site": {
+    "title": "Harbour Jackpot – Win {jackpot} | Harbour Play",
+    "description": "Tickets only {ticketPrice} every {drawDay} at {drawTime}. Play the Harbour Jackpot.",
+    "brandName": "Harbour Play",
+    "logoAlt": "Harbour Play"
+  },
+
+  "jackpot": {
+    "amount": "€1,000,000",
+    "ticketPrice": "€3"
+  },
+
+  "draw": {
+    "timezone": "Europe/Malta",
+    "weekday": 6,
+    "time": "21:00",
+    "nextDrawOverride": null,
+    "_note": "weekday: 0 = Sunday … 6 = Saturday. The countdown targets the next weekly draw automatically. To target one specific draw instead, set nextDrawOverride to an ISO date-time with offset, e.g. \"2026-12-24T21:00:00+01:00\"; set it back to null afterwards."
+  },
+
+  "cta": {
+    "label": "Buy Ticket",
+    "href": "#",
+    "placeholder": true,
+    "_note": "No ticket-purchase page exists yet. Set href to the real purchase URL."
+  },
+
+  "navigation": {
+    "items": [
+      { "label": "Home", "href": "#home" },
+      { "label": "How to Play", "href": "#how-to-play" },
+      { "label": "Prizes", "href": "#prizes" },
+      { "label": "Results", "href": "#results" },
+      { "label": "FAQ", "href": "#faq" }
+    ],
+    "language": "EN",
+    "languageLabel": "Language: English",
+    "menuLabel": "Open menu"
+  },
+
+  "hero": {
+    "title": "Harbour Jackpot",
+    "tagline": [
+      { "text": "TICKETS ONLY " },
+      { "text": "{ticketPrice} ", "highlight": true },
+      { "text": "EVERY " },
+      { "text": "{drawDayUpper} · {drawTime}", "highlight": true }
+    ],
+    "legal": "18+ Play Responsibly T&Cs Apply",
+    "imageAlt": "Smiling cartoon ship captain at a ship's wheel surrounded by gold coins"
+  },
+
+  "countdown": {
+    "title": "Next draw start in",
+    "subtitle": [
+      { "text": "Every " },
+      { "text": "{drawDay} · {drawTime}", "highlight": true }
+    ],
+    "labels": { "days": "Days", "hours": "Hours", "minutes": "Min", "seconds": "Sec" },
+    "ariaLabel": "Time until the next draw",
+    "nextDrawTitle": "Next draw"
+  },
+
+  "howToPlay": {
+    "title": "How to Play",
+    "subtitle": "Playing is simple. Just three easy steps to enter the draw and get a chance to win.",
+    "steps": [
+      { "number": "01", "title": "Choose Numbers", "text": "Pick 6 numbers from the available selection to create your entry for the next draw.", "imageAlt": "Lottery tickets and balls" },
+      { "number": "02", "title": "Buy Your Ticket", "text": "Confirm your selection and purchase your ticket for just {ticketPrice}.", "imageAlt": "Tickets and coins" },
+      { "number": "03", "title": "Check the Results", "text": "Tune in every {drawDay} at {drawTime} to see the winning numbers and check your ticket.", "imageAlt": "Treasure chest" }
+    ]
+  },
+
+  "prizes": {
+    "title": "Prize tiers",
+    "subtitle": "Playing is simple. Just three easy steps to enter the draw and",
+    "blurb": "Match your numbers and unlock amazing prizes.",
+    "tiers": [
+      { "name": "Jackpot", "amount": "{jackpot}", "imageAlt": "Open chest full of silver" },
+      { "name": "2nd Prize", "amount": "€100,000", "imageAlt": "Chest full of banknotes" },
+      { "name": "3rd Prize", "amount": "€10,000", "imageAlt": "Chest full of blue gems" },
+      { "name": "4th Prize", "amount": "€1,000", "imageAlt": "Pile of coins" }
+    ],
+    "_note": "Subtitle text is as supplied in the design (it reads as unfinished copy). Prize amounts come from the design and are not verified."
+  },
+
+  "latestResults": {
+    "title": "Latest results",
+    "subtitle": "Playing is simple. Just three easy steps to enter the draw and",
+    "drawDate": "Saturday, 14 Nov 2026",
+    "drawNumber": "Draw #024",
+    "numbers": [64, 19, 10, 11, 20],
+    "numbersLabel": "Winning numbers",
+    "winners": "5",
+    "winnersLabel": "Winners",
+    "viewAll": { "label": "View All Results", "href": "#", "placeholder": true },
+    "placeholder": true,
+    "_note": "Draw date, draw number, numbers and winner count are sample values from the design, NOT real results. Replace with official results after each draw."
+  },
+
+  "faq": {
+    "title": "Questions? We have answers",
+    "items": [
+      { "question": "How do I enter the Harbour Jackpot?", "answer": "PLACEHOLDER: answer copy not provided (the design used Lorem Ipsum filler).", "open": true, "placeholder": true },
+      { "question": "How much does a ticket cost?", "answer": "PLACEHOLDER: answer copy not provided in the Figma design.", "placeholder": true },
+      { "question": "When does the draw take place?", "answer": "PLACEHOLDER: answer copy not provided in the Figma design.", "placeholder": true },
+      { "question": "How are the winning numbers selected?", "answer": "PLACEHOLDER: answer copy not provided in the Figma design.", "placeholder": true },
+      { "question": "How can I claim my prize?", "answer": "PLACEHOLDER: answer copy not provided in the Figma design.", "placeholder": true },
+      { "question": "What happens if nobody wins the jackpot?", "answer": "PLACEHOLDER: answer copy not provided in the Figma design.", "placeholder": true }
+    ]
+  },
+
+  "saferGambling": {
+    "title": "Safer Gambling",
+    "text": "18+ only. Play responsibly: only spend what you can afford to lose, and take a break if playing stops being fun.",
+    "support": "PLACEHOLDER: name and contact details of the support / helpline organisation, to be confirmed by the operator.",
+    "placeholder": true,
+    "_note": "'text' is general guidance based on the design's '18+ Play Responsibly' line. 'support' must be replaced with the operator's official helpline information."
+  },
+
+  "footer": {
+    "groups": [
+      { "id": "contact", "title": "Contacts US", "items": [
+        { "label": "support@harbourplay.com", "href": "mailto:support@harbourplay.com" },
+        { "label": "+356 1234 5678", "href": "tel:+35612345678" },
+        { "label": "Malta, Europe" }
+      ], "_note": "Email, phone and location are as shown in the design; confirm they are real before launch." },
+      { "id": "explore", "title": "Explore", "items": [
+        { "label": "Home", "href": "#home" },
+        { "label": "How to Play", "href": "#how-to-play" },
+        { "label": "Prize Tiers", "href": "#prizes" },
+        { "label": "Latest Results", "href": "#results" }
+      ] },
+      { "id": "info", "title": "Information", "items": [
+        { "label": "FAQ", "href": "#faq" },
+        { "label": "Terms & Conditions", "href": "#", "placeholder": true },
+        { "label": "Privacy Policy", "href": "#", "placeholder": true },
+        { "label": "Contact Us", "href": "#contact" }
+      ] },
+      { "id": "rg", "title": "Responsible Play", "items": [
+        { "label": "Safer Gambling", "href": "#safer-gambling" },
+        { "label": "Set Your Limits", "href": "#", "placeholder": true },
+        { "label": "Get Support", "href": "#", "placeholder": true }
+      ] }
+    ],
+    "followTitle": "Follow us",
+    "social": [
+      { "label": "Facebook", "href": "#", "placeholder": true },
+      { "label": "Instagram", "href": "#", "placeholder": true },
+      { "label": "YouTube", "href": "#", "placeholder": true }
+    ],
+    "paymentsTitle": "Secure & Easy Payments",
+    "payments": ["Paysafe Payz", "Visa", "Mastercard", "Maestro", "Skrill", "Rapid Transfer by Skrill", "Neteller", "Revolut", "Bank transfer", "PCI DSS compliant"],
+    "copyright": { "prefix": "© 2026 ", "name": "Harbour Play", "suffix": ". All rights reserved." },
+    "licence": {
+      "text": "PLACEHOLDER: licence holder, regulator and licence number to be provided by the operator.",
+      "placeholder": true
+    },
+    "language": "English",
+    "currency": "EUR",
+    "accessibilityLabel": "Accessibility options"
+  }
+}
