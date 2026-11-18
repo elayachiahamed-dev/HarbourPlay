@@ -369,7 +369,7 @@ If you deploy from the original local folder with Netlify Drop, you can leave ou
 
 - **Repository:** <https://github.com/elayachiahamed-dev/HarbourPlay>
 - **Remote:** `origin` → `git@github.com:elayachiahamed-dev/HarbourPlay.git`
-- **Default branch:** `main`. Its history keeps both the original upload (`518471d`, "Initial commit") and the local project history; the two were joined with a normal merge commit, without any force-push.
+- **Default branch:** `main`. Its history keeps both the original upload (`0318167`, "Initial commit") and the local project history, joined with a normal merge commit. On 18 Nov 2026 the history was rewritten to correct the commit author identity and force-pushed, so commit IDs from before that rewrite no longer exist.
 - **Ignored files** (`.gitignore`): `.DS_Store`, `node_modules/`, `.netlify/`, `.vercel/`, `*.log`.
 
 ### Working copy setup
