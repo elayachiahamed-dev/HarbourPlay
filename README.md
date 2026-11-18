@@ -8,7 +8,7 @@ Harbour Jackpot is a responsive, single-page marketing site for a weekly jackpot
 
 The site is plain static files (HTML, CSS, JavaScript and one JSON file) with no framework and no build step. All editable text and numbers are in **`data.json`**, which `js/main.js` reads when the page loads and uses to render every section.
 
-> **Status:** not deployed, and the Git repository has no remote. Some content is unverified and marked as a placeholder in `data.json` (see [Editable Content](#7-editable-content-jackpot-draw-date-results-and-faq)).
+> **Status:** source code is on GitHub at [elayachiahamed-dev/HarbourPlay](https://github.com/elayachiahamed-dev/HarbourPlay); the site is not deployed yet. Some content is unverified and marked as a placeholder in `data.json` (see [Editable Content](#7-editable-content-jackpot-draw-date-results-and-faq)).
 
 ---
 
@@ -79,7 +79,7 @@ harbour-jackpot/
 └── README.md
 ```
 
-`.claude/launch.json` is a local editor configuration for the Claude app's preview and is not part of the website.
+The original local folder also contains `.claude/launch.json`, a local editor configuration for the Claude app's preview. It is not part of the website and not tracked in Git.
 
 ---
 
@@ -98,17 +98,23 @@ On macOS, Python 3 and Git come with Apple's Command Line Tools (`xcode-select -
 
 ### Get the project
 
-The repository has no remote yet, so the project currently lives in a local folder:
+Clone the repository from GitHub (SSH):
 
 ```bash
-cd ~/Documents/harbour-jackpot
+git clone git@github.com:elayachiahamed-dev/HarbourPlay.git harbour-jackpot
 ```
 
-Once it has been pushed to a Git host (see [Git Repository](#13-git-repository)), clone it with:
+or over HTTPS:
 
 ```bash
-git clone <repository-url> harbour-jackpot
+git clone https://github.com/elayachiahamed-dev/HarbourPlay.git harbour-jackpot
 ```
+
+```bash
+cd harbour-jackpot
+```
+
+If the repository is private, cloning requires access to it. The original working copy is at `~/Documents/harbour-jackpot` on the author's Mac.
 
 There is nothing to install: no `npm install` and no build.
 
@@ -344,8 +350,8 @@ It also lists placeholders as warnings, and exits with an error if anything is b
 
 **Option B – Netlify with GitHub (automatic deploys)**
 
-1. Push the repository to GitHub (see [Git Repository](#13-git-repository)).
-2. In Netlify: **Add new site → Import an existing project → GitHub**, then select the repository.
+1. Make sure your latest changes are pushed to `main` on GitHub (see [Git Repository](#13-git-repository)).
+2. In Netlify: **Add new site → Import an existing project → GitHub**, then select **elayachiahamed-dev/HarbourPlay** (authorise Netlify for the account or repository if asked).
 3. Branch: `main`. Build command: leave empty. Publish directory: `.`
 4. Click **Deploy**. Every push to `main` then redeploys automatically; earlier deploys can be restored from **Deploys**.
 
@@ -355,26 +361,33 @@ It also lists placeholders as warnings, and exits with an error if anything is b
 npx netlify-cli deploy --dir . --prod
 ```
 
-The `.claude/` folder is a local editor configuration; it is harmless if deployed, but you can exclude it when using Netlify Drop.
+If you deploy from the original local folder with Netlify Drop, you can leave out its `.claude/` folder: it is a local editor configuration that is not tracked in Git.
 
 ---
 
 ## 13. Git Repository
 
-- **Branches:** `main` (2 commits) and `feat/hero-webp`, created from the latest `main` commit for the WebP hero work.
-- **Remote:** none configured yet; nothing has been pushed.
+- **Repository:** <https://github.com/elayachiahamed-dev/HarbourPlay>
+- **Remote:** `origin` → `git@github.com:elayachiahamed-dev/HarbourPlay.git`
+- **Default branch:** `main`. Its history keeps both the original upload (`518471d`, "Initial commit") and the local project history; the two were joined with a normal merge commit, without any force-push.
 - **Ignored files** (`.gitignore`): `.DS_Store`, `node_modules/`, `.netlify/`, `.vercel/`, `*.log`.
 
-### Connect to GitHub (first time)
+### Working copy setup
 
-Create an empty repository on GitHub (without a README, `.gitignore` or licence), then:
+A fresh clone (see [Installation & Local Setup](#5-installation--local-setup)) is already connected to GitHub. For a copy without the remote, add it once:
 
 ```bash
-git remote add origin https://github.com/<your-account>/harbour-jackpot.git
+git remote add origin git@github.com:elayachiahamed-dev/HarbourPlay.git
 ```
 
 ```bash
-git push -u origin main
+git branch -u origin/main main
+```
+
+Get the latest changes before starting work:
+
+```bash
+git pull
 ```
 
 ### Everyday workflow
